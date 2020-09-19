@@ -1,0 +1,4 @@
+# Prisma Migrate lockfile v1
+
+20200919141952-initial-migration
+20200919143833-fix-task-entity

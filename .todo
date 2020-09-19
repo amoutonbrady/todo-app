@@ -1,0 +1,9 @@
+database:
+    ✔ create the database @started(20-09-19 16:14) @done(20-09-19 16:22) @lasted(8m14s)
+    ✔ create the tables & the relations @done(20-09-19 16:22)
+
+server:
+    ✔ create the server @started(20-09-19 16:22) @done(20-09-19 16:56) @lasted(34m42s)
+
+client:
+    ✔ create the client @started(20-09-19 16:57) @done(20-09-19 19:20) @lasted(2h23m45s)
