@@ -9,7 +9,18 @@ import {
 } from "./task.schema";
 
 export async function TaskController(app: FastifyInstance) {
-  app.get("/tasks", async () => {
+  // Delete all tasks that were created before user was created
+  const deleted = await app.db.task.deleteMany({
+    where: { userId: { equals: -1 } },
+  });
+  if (deleted.count) {
+    console.log(
+      `ℹ️  ${deleted.count} tasks were deleted because they were not tied to a user`
+    );
+  }
+
+  app.get("/tasks", { preValidation: [app.authenticate] }, async (req) => {
+    console.log(req.dbUser);
     return app.db.task.findMany();
   });
 

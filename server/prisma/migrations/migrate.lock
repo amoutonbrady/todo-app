@@ -2,3 +2,5 @@
 
 20200919141952-initial-migration
 20200919143833-fix-task-entity
+20200921111944-add-user
+20200921114928-add-unique-constraint

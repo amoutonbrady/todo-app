@@ -1,13 +1,15 @@
 import { fastify } from "fastify";
 import cors from "fastify-cors";
 
-import dbPlugin from "./services/db.service";
 import ModuleLoader from "./modules";
+import dbPlugin from "./services/db.service";
+import jwtPlugin from "./services/jwt.service";
 
 const app = fastify();
 
 app.register(cors, { origin: true });
 app.register(dbPlugin);
+app.register(jwtPlugin);
 app.register(ModuleLoader);
 
 app.listen(3000, (err, address) => {

@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url = "***"
 }
 
 generator client {
@@ -23,7 +23,7 @@ model Task {
 
 model User {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
+  email     String
   password  String
   tasks     Task[]
   createdAt DateTime @default(now())
