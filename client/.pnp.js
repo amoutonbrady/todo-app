@@ -47,7 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["autoprefixer", "npm:9.8.6"],
             ["babel-preset-solid", "npm:0.20.0-beta.1"],
             ["parcel", "npm:2.0.0-nightly.407"],
-            ["solid-js", "npm:0.20.0-beta.4"],
+            ["solid-js", "npm:0.20.0-beta.5"],
             ["tailwindcss", "npm:1.8.10"],
             ["typescript", "patch:typescript@npm%3A4.0.3#builtin<compat/typescript>::version=4.0.3&hash=5b02a2"]
           ],
@@ -60,7 +60,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@amoutonbrady/solid-i18n", "virtual:67bccc7d0bcfa1230f52b04f252953235f3247e8df364142a4b7724e7369b822323dc3148cf3825512a8c0b70e04e7501cbd67f5ac8193999d7bc7a9f219cccb#npm:0.0.3"],
             ["@types/solid-js", null],
-            ["solid-js", "npm:0.20.0-beta.4"]
+            ["solid-js", "npm:0.20.0-beta.5"]
           ],
           "packagePeers": [
             "@types/solid-js",
@@ -77,7 +77,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/solid-js", null],
             ["mitt", "npm:2.1.0"],
             ["regexparam", "npm:1.3.0"],
-            ["solid-js", "npm:0.20.0-beta.4"]
+            ["solid-js", "npm:0.20.0-beta.5"]
           ],
           "packagePeers": [
             "@types/solid-js",
@@ -4212,7 +4212,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["autoprefixer", "npm:9.8.6"],
             ["babel-preset-solid", "npm:0.20.0-beta.1"],
             ["parcel", "npm:2.0.0-nightly.407"],
-            ["solid-js", "npm:0.20.0-beta.4"],
+            ["solid-js", "npm:0.20.0-beta.5"],
             ["tailwindcss", "npm:1.8.10"],
             ["typescript", "patch:typescript@npm%3A4.0.3#builtin<compat/typescript>::version=4.0.3&hash=5b02a2"]
           ],
@@ -9464,10 +9464,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["solid-js", [
-        ["npm:0.20.0-beta.4", {
-          "packageLocation": "./.yarn/cache/solid-js-npm-0.20.0-beta.4-0b52f4941a-3eec36b345.zip/node_modules/solid-js/",
+        ["npm:0.20.0-beta.5", {
+          "packageLocation": "./.yarn/cache/solid-js-npm-0.20.0-beta.5-e7db115085-d44d77f117.zip/node_modules/solid-js/",
           "packageDependencies": [
-            ["solid-js", "npm:0.20.0-beta.4"]
+            ["solid-js", "npm:0.20.0-beta.5"]
           ],
           "linkType": "HARD",
         }]

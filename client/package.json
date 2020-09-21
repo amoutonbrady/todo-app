@@ -10,10 +10,10 @@
     "@babel/core": "^7.11.6",
     "@babel/preset-typescript": "^7.10.4",
     "@babel/types": "^7.11.5",
-    "@parcel/config-default": "nightly",
-    "autoprefixer": "9",
-    "babel-preset-solid": "beta",
-    "parcel": "nightly",
+    "@parcel/config-default": "^2.0.0-nightly.409",
+    "autoprefixer": "9.8.6",
+    "babel-preset-solid": "^0.20.0-beta.1",
+    "parcel": "^2.0.0-nightly.407",
     "tailwindcss": "^1.8.10",
     "typescript": "^4.0.3"
   },
@@ -21,6 +21,6 @@
     "@amoutonbrady/solid-i18n": "^0.0.3",
     "@amoutonbrady/solid-tiny-router": "^0.3.4",
     "@amoutonbrady/tiny-http": "^0.2.4",
-    "solid-js": "beta"
+    "solid-js": "^0.20.0-beta.5"
   }
 }
