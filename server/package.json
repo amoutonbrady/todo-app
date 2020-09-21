@@ -3,11 +3,25 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev:compile": "tsc -w",
+    "dev:run": "nodemon dist/server",
+    "dev": "run-p dev:compile dev:run",
+    "prod:compile": "rm -rf dist && tsc",
+    "prod:serve": "node dist/server",
+    "prod": "run-s prod:compile prod:serve"
+  },
   "dependencies": {
     "@prisma/cli": "^2.7.1",
     "@prisma/client": "^2.7.1",
-    "esm": "^3.2.25",
     "fastify": "^3.4.1",
-    "fastify-cors": "^4.1.0"
+    "fastify-cors": "^4.1.0",
+    "fastify-plugin": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.1",
+    "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.0.3"
   }
 }
