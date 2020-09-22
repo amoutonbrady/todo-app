@@ -1,14 +1,43 @@
-import { http, method, appendUrl, appendBody } from "@amoutonbrady/tiny-http";
+import {
+  http,
+  method,
+  appendUrl,
+  appendBody,
+  resolve,
+  headers,
+} from "@amoutonbrady/tiny-http";
 import { Component, createContext, useContext } from "solid-js";
 
 function createAPIStore(url: string) {
-  const client = http({
+  let client = http({
     url,
     json: true,
     responseType: "json",
+    preResolve: (res) => {
+      if (res.status >= 400) throw new Error(res.statusText);
+    },
+    catcher: (e) => {
+      throw e;
+    },
   });
 
   return {
+    setToken(token: string) {
+      client = client.pipe(headers({ authorization: `Bearer ${token}` }));
+    },
+    login(body: { email: string; password: string }) {
+      return client
+        .pipe(resolve((res) => res.token))
+        .post<string>("login", body);
+    },
+    register(body: { email: string; password: string }) {
+      return client
+        .pipe(resolve((res) => res.token))
+        .post<string>("register", body);
+    },
+    me() {
+      return client.get("me");
+    },
     getTasks() {
       return client.get<Task[]>("tasks");
     },
