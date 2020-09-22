@@ -21,3 +21,17 @@ export const registerUserDto: FastifySchema = {
     },
   },
 };
+
+export const meUserDto: FastifySchema = {
+  response: {
+    "2xx": {
+      type: "object",
+      properties: {
+        id: { type: "number" },
+        email: { type: "string" },
+        createdAt: { type: "string" },
+        updatedAt: { type: "string" },
+      },
+    },
+  },
+};

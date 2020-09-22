@@ -9,26 +9,33 @@ import {
 } from "./task.schema";
 
 export async function TaskController(app: FastifyInstance) {
-  // Delete all tasks that were created before user was created
-  const deleted = await app.db.task.deleteMany({
-    where: { userId: { equals: -1 } },
-  });
-  if (deleted.count) {
-    console.log(
-      `ℹ️  ${deleted.count} tasks were deleted because they were not tied to a user`
-    );
+  function ensureUser(userId: number) {
+    return {
+      async hasRightsForTask(id: number) {
+        const tasks = await app.db.task.findMany({ where: { id, userId } });
+        return tasks.length > 0;
+      },
+    };
   }
 
-  app.get("/tasks", { preValidation: [app.authenticate] }, async (req) => {
-    console.log(req.dbUser);
-    return app.db.task.findMany();
-  });
+  app.get(
+    "/tasks",
+    { preValidation: [app.authenticate] },
+    async ({ dbUser }) => {
+      return app.db.task.findMany({ where: { userId: dbUser.id } });
+    }
+  );
 
   app.get<{ Params: { id: number } }>(
     "/tasks/:id",
-    { schema: getTaskDto },
-    async ({ params }) => {
-      return app.db.task.findOne({ where: { id: params.id } });
+    { schema: getTaskDto, preValidation: [app.authenticate] },
+    async ({ dbUser, params }) => {
+      const user = app.db.task.findMany({
+        where: { id: params.id, userId: dbUser.id },
+        take: 1,
+      });
+
+      return user[0];
     }
   );
 
@@ -36,29 +43,44 @@ export async function TaskController(app: FastifyInstance) {
   app.post<{
     Params: { id: number };
     Body: Pick<TaskCreateInput, "title" | "status" | "description">;
-  }>("/tasks", { schema: createTaskDto }, async ({ body }) => {
-    return app.db.task.create({ data: body });
-  });
+  }>(
+    "/tasks",
+    { schema: createTaskDto, preValidation: [app.authenticate] },
+    async ({ body, dbUser }) => {
+      return app.db.task.create({
+        data: { ...body, user: { connect: { id: dbUser.id } } },
+      });
+    }
+  );
 
   // Update a task
   app.patch<{
     Params: { id: number };
     Body: Pick<TaskUpdateInput, "title" | "status" | "description">;
-  }>("/tasks/:id", { schema: updateTaskDto }, async ({ params, body }) => {
-    return app.db.task.update({
-      where: { id: params.id },
-      data: body,
-    });
-  });
+  }>(
+    "/tasks/:id",
+    { schema: updateTaskDto, preValidation: [app.authenticate] },
+    async ({ params, body, dbUser }, rep) => {
+      const canUpdate = await ensureUser(dbUser.id).hasRightsForTask(params.id);
+      if (!canUpdate) return rep.code(400) && undefined;
+
+      return app.db.task.update({
+        where: { id: params.id },
+        data: { ...body, user: { connect: { id: dbUser.id } } },
+      });
+    }
+  );
 
   // Delete a task
   app.delete<{ Params: { id: number } }>(
     "/tasks/:id",
-    { schema: deleteTaskDto },
-    async ({ params }, rep) => {
+    { schema: deleteTaskDto, preValidation: [app.authenticate] },
+    async ({ params, dbUser }, rep) => {
+      const canUpdate = await ensureUser(dbUser.id).hasRightsForTask(params.id);
+      if (!canUpdate) return rep.code(400) && undefined;
+
       await app.db.task.delete({ where: { id: params.id } });
-      rep.code(204);
-      return undefined;
+      return rep.code(204) && undefined;
     }
   );
 }

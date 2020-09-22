@@ -1,8 +1,16 @@
 import { FastifyInstance } from "fastify";
 import { compare, hash } from "bcrypt";
-import { loginUserDto, registerUserDto } from "./auth.schema";
+import { loginUserDto, meUserDto, registerUserDto } from "./auth.schema";
 
 export async function AuthController(app: FastifyInstance) {
+  app.get(
+    "/me",
+    { preValidation: [app.authenticate], schema: meUserDto },
+    async ({ dbUser }) => {
+      return dbUser;
+    }
+  );
+
   app.post<{ Body: { email: string; password: string } }>(
     "/register",
     { schema: registerUserDto },
@@ -30,14 +38,14 @@ export async function AuthController(app: FastifyInstance) {
 
       if (!user) {
         rep.code(400);
-        return undefined;
+        return {};
       }
 
       const match = await compare(password, user.password);
 
       if (!match) {
         rep.code(400);
-        return undefined;
+        return {};
       }
 
       return {
